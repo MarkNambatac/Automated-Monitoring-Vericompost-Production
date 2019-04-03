@@ -1,0 +1,70 @@
+<ion-header >
+  <ion-toolbar color= "dark">
+    <ion-title >
+       Monitoring Vericompost Production
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  
+  <ion-button color="primary" (click) = "startScanning()"><ion-icon name="bluetooth"></ion-icon>&nbsp;Scan Devices</ion-button>
+  <ion-button color="danger" (click) = "disconnect()"><ion-icon name="remove-circle"></ion-icon>&nbsp; Disconnect</ion-button>
+
+  <ion-list>
+    <h5 *ngIf="gettingDevices">
+      Searching For Devices
+      <ion-spinner name="crescent"></ion-spinner>
+    </h5>
+
+    <ion-item class="back" *ngFor='let device of unpairedDevices'>
+      <span (click)="selectDevice(device.address)">
+        {{device.name}}
+      </span>
+    </ion-item>
+  </ion-list>
+
+<!--   
+  <ion-item class="back">
+    <p class="fon">
+      Temperature: {{ message.temp }}
+      Humidity : {{ message.humidity }}
+    </p>
+  </ion-item> -->
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>Last Updated: 3s ago</ion-card-subtitle>
+      <ion-card-title><ion-icon name="pulse"></ion-icon>&nbsp;Soil Moisture</ion-card-title>
+    </ion-card-header>
+  
+    <ion-card-content>
+      <p style="font-size: 48px;">1023</p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>Last Updated: 3s ago</ion-card-subtitle>
+      <ion-card-title><ion-icon name="thermometer"></ion-icon>&nbsp;Soil Temperature</ion-card-title>
+    </ion-card-header>
+  
+    <ion-card-content>
+      <p style="font-size: 48px;">{{ output.temperature }}°C</p>
+    </ion-card-content>
+  </ion-card>
+  
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>Last Updated: 3s ago</ion-card-subtitle>
+      <ion-card-title> <ion-icon name="water"></ion-icon>&nbsp; Water Level</ion-card-title>
+    </ion-card-header>
+  
+    <ion-card-content>
+      <p style="font-size: 48px;">{{ output.humidity }} %</p>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- <ion-button color="secondary" (click) = "data()"><ion-icon name="play-circle"></ion-icon> &nbsp;Start Receiving Data </ion-button> -->
+ 
+</ion-content>
