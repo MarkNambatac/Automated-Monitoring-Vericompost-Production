@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
 import { BluetoothSerial } from '@ionic-native/bluetooth-serial/ngx';
 import { AlertController, ToastController, LoadingController } from '@ionic/angular';
-
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
 
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
   styleUrls: ['tab1.page.scss']
 })
+
 export class Tab1Page {
   output: any;
   message: any;
@@ -18,8 +19,9 @@ export class Tab1Page {
   gettingDevices: boolean;
 
   constructor(private alertCtrl: AlertController, private toastCtrl: ToastController, 
-    private bluetoothSerial: BluetoothSerial, public loadingController: LoadingController) {
-    bluetoothSerial.enable();
+    private bluetoothSerial: BluetoothSerial, public loadingController: LoadingController,
+    private nativeStorage: NativeStorage) {
+      bluetoothSerial.enable();
   }
 
   startScanning() {
@@ -128,6 +130,9 @@ export class Tab1Page {
       var actual_data = JSON.parse(data);
       this.output = actual_data;
       console.log(actual_data.temperature);
+      this.nativeStorage.setItem('data', actual_data).then(()=> {
+        data => cons
+      });
     });
   }
 
