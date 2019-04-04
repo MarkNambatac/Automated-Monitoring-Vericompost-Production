@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { BluetoothSerial } from '@ionic-native/bluetooth-serial/ngx';
 import { AlertController, ToastController, LoadingController } from '@ionic/angular';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-tab1',
@@ -17,10 +18,11 @@ export class Tab1Page {
   pairedDevices: any;
   statusMessage: any;
   gettingDevices: boolean;
+  items: any = [];
 
   constructor(private alertCtrl: AlertController, private toastCtrl: ToastController, 
     private bluetoothSerial: BluetoothSerial, public loadingController: LoadingController,
-    private nativeStorage: NativeStorage) {
+    private storage: Storage) {
       bluetoothSerial.enable();
   }
 
@@ -77,9 +79,7 @@ export class Tab1Page {
       }
     } catch(e) {
       console.log("Error Occurred");
-    }
-
-   
+    }   
   }
 
 
@@ -130,10 +130,33 @@ export class Tab1Page {
       var actual_data = JSON.parse(data);
       this.output = actual_data;
       console.log(actual_data.temperature);
-      this.nativeStorage.setItem('data', actual_data).then(()=> {
-        data => cons
-      });
+      this.addItem(data);
     });
   }
+
+  async clear() {
+    this.storage.clear();
+  }
+
+  async addItem(item) { 
+    try {
+      this.storage.get('myitem')
+        .then((data) => {
+          if(data) {
+            console.log("Naa nay myitem daan");
+            this.items.push(item);
+            return this.storage.set('myitem', this.items);
+          } else {
+            console.log("Wala pay myitem haha");
+            return this.storage.set('myitem', item);
+          }
+          },
+        error => console.error(error)
+        );
+    } catch(e) {
+      console.log(e);
+    }
+  }
+
 
 }

@@ -10,7 +10,9 @@
   
   <ion-button color="primary" (click) = "startScanning()"><ion-icon name="bluetooth"></ion-icon>&nbsp;Scan Devices</ion-button>
   <ion-button color="danger" (click) = "disconnect()"><ion-icon name="remove-circle"></ion-icon>&nbsp; Disconnect</ion-button>
-
+  <ion-button color="danger" (click) = "addItem('test')"><ion-icon name="remove-circle"></ion-icon>&nbsp; Data 1</ion-button>
+  <ion-button color="danger" (click) = "addItem('{temp: 123}')"><ion-icon name="remove-circle"></ion-icon>&nbsp; Data 2</ion-button>
+  <ion-button color="danger" (click) = "clear()"><ion-icon name="remove-circle"></ion-icon>&nbsp; Clear Data</ion-button>
   <ion-list>
     <h5 *ngIf="gettingDevices">
       Searching For Devices
