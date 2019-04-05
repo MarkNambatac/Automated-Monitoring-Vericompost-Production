@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { NativeStorage} from '@ionic-native/native-storage/ngx';
 import { Storage } from '@ionic/storage';
-
+import {  BluetoothSerial } from '@ionic-native/bluetooth-serial/ngx';
+import { Events } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab2',
@@ -9,24 +10,11 @@ import { Storage } from '@ionic/storage';
   styleUrls: ['tab2.page.scss']
 })
 export class Tab2Page {
-  message1: any;
-  constructor(private storage: Storage) {
-    
-  }
-
-  getData() {
-    this.storage.get('myitem')
-  .then(
-  data => {
-    this.message1 = data;
-    console.log(`From tab 2: ${data}`);
-  },
-    error => console.error(error)
-  );
-  }
-
-  async clear() {
-    this.storage.clear();
-  }
-
+  output: any;
+  sensors : any = []
+  constructor(private storage: Storage, private bluetoothSerial : BluetoothSerial, public events: Events) {
+    events.subscribe('data:created', (data) => {
+      this.output = data;
+    })
+  }  
 }

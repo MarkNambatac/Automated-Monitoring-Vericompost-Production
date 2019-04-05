@@ -7,17 +7,28 @@
 </ion-header>
 
 <ion-content>
-  
+  <div id = "bodeh">
+  <p>
+    <strong>Note: </strong>Connect the Device with the Bluetooth Name of HC-05. Make sure to pair it first in the settings of the bluetooth
+  </p>
+  <div *ngIf= "status">
+    <h3>Status: Connected</h3>
+  </div>
+  <div *ngIf= "!status">
+      <h3>Status: Not Connected</h3>
+  </div>
   <ion-button color="primary" (click) = "startScanning()"><ion-icon name="bluetooth"></ion-icon>&nbsp;Scan Devices</ion-button>
   <ion-button color="danger" (click) = "disconnect()"><ion-icon name="remove-circle"></ion-icon>&nbsp; Disconnect</ion-button>
-  <ion-button color="danger" (click) = "addItem('test')"><ion-icon name="remove-circle"></ion-icon>&nbsp; Data 1</ion-button>
-  <ion-button color="danger" (click) = "addItem('{temp: 123}')"><ion-icon name="remove-circle"></ion-icon>&nbsp; Data 2</ion-button>
-  <ion-button color="danger" (click) = "clear()"><ion-icon name="remove-circle"></ion-icon>&nbsp; Clear Data</ion-button>
+  
   <ion-list>
-    <h5 *ngIf="gettingDevices">
-      Searching For Devices
-      <ion-spinner name="crescent"></ion-spinner>
-    </h5>
+   
+        <h5 *ngIf="gettingDevices" id = "spinner">
+            <ion-spinner name="crescent"></ion-spinner> <br>
+            Searching For Devices &nbsp;
+           
+          </h5>
+  
+   
 
     <ion-item class="back" *ngFor='let device of unpairedDevices'>
       <span (click)="selectDevice(device.address)">
@@ -26,39 +37,7 @@
     </ion-item>
   </ion-list>
 
-  <ion-card>
-    <ion-card-header>
-      <ion-card-subtitle>Last Updated: 3s ago</ion-card-subtitle>
-      <ion-card-title><ion-icon name="pulse"></ion-icon>&nbsp;Soil Moisture</ion-card-title>
-    </ion-card-header>
   
-    <ion-card-content>
-      <p style="font-size: 48px;">1023</p>
-    </ion-card-content>
-  </ion-card>
-
-  <ion-card>
-    <ion-card-header>
-      <ion-card-subtitle>Last Updated: 3s ago</ion-card-subtitle>
-      <ion-card-title><ion-icon name="thermometer"></ion-icon>&nbsp;Soil Temperature</ion-card-title>
-    </ion-card-header>
-  
-    <ion-card-content>
-      <p style="font-size: 48px;">{{ output.temperature }}°C</p>
-    </ion-card-content>
-  </ion-card>
-  
-  <ion-card>
-    <ion-card-header>
-      <ion-card-subtitle>Last Updated: 3s ago</ion-card-subtitle>
-      <ion-card-title> <ion-icon name="water"></ion-icon>&nbsp; Water Level</ion-card-title>
-    </ion-card-header>
-  
-    <ion-card-content>
-      <p style="font-size: 48px;">{{ output.humidity }} %</p>
-    </ion-card-content>
-  </ion-card>
-
   <!-- <ion-button color="secondary" (click) = "data()"><ion-icon name="play-circle"></ion-icon> &nbsp;Start Receiving Data </ion-button> -->
- 
+</div>
 </ion-content>

@@ -13,6 +13,7 @@
   max-height: 35vh;
   overflow: hidden;
 }
+
 ion-title {
   position: absolute;
   top: 0;
@@ -23,9 +24,19 @@ ion-title {
   text-align: center;
 }
 
+#spinner { 
+ 
+  text-align: center;
+}
+
+
 
 body, html {
   height: 100%;
-  font-family: sans-serif;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+#bodeh { 
+  padding: 5px 15px 15px 15px;
 }
 

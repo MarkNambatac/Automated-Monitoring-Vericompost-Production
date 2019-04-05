@@ -3,7 +3,7 @@ import { BluetoothSerial } from '@ionic-native/bluetooth-serial/ngx';
 import { AlertController, ToastController, LoadingController } from '@ionic/angular';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { Storage } from '@ionic/storage';
-
+import { Events } from '@ionic/angular';
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
@@ -19,10 +19,11 @@ export class Tab1Page {
   statusMessage: any;
   gettingDevices: boolean;
   items: any = [];
+  status: boolean = false;
 
   constructor(private alertCtrl: AlertController, private toastCtrl: ToastController, 
     private bluetoothSerial: BluetoothSerial, public loadingController: LoadingController,
-    private storage: Storage) {
+    private storage: Storage, public events: Events) {
       bluetoothSerial.enable();
   }
 
@@ -30,7 +31,6 @@ export class Tab1Page {
     this.pairedDevices = null;
     this.unpairedDevices = null;
     this.gettingDevices = true;
-
 
     this.bluetoothSerial.discoverUnpaired().then((success) => {
       this.unpairedDevices = success;
@@ -68,6 +68,7 @@ export class Tab1Page {
           handler: () => {
             this.bluetoothSerial.connect(address).subscribe(this.success, this.fail);
             this.data();
+            this.status = true;
           }
         }]
       });
@@ -81,7 +82,6 @@ export class Tab1Page {
       console.log("Error Occurred");
     }   
   }
-
 
   async disconnect() {
     try {
@@ -100,6 +100,7 @@ export class Tab1Page {
             handler: () => {
               this.bluetoothSerial.disconnect();
               this.gettingDevices = null;
+              this.status = false;
             }
           }
         ]
@@ -123,14 +124,14 @@ export class Tab1Page {
     }, 3000);
   }
 
-
   read() {
     this.bluetoothSerial.readUntil('\n').then((data) => {
       console.log(`Data : ${data}`);
       var actual_data = JSON.parse(data);
       this.output = actual_data;
       console.log(actual_data.temperature);
-      this.addItem(data);
+      this.events.publish('data:created', actual_data);
+
     });
   }
 
